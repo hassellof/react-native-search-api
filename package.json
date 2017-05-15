@@ -1,0 +1,22 @@
+{
+  "name": "react-native-search-api",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ombori/react-native-search-api"
+  },
+  "version": "1.0.0",
+  "description": "A React Native module that allows to perform the Spotlight integration on iOS",
+  "author": "Daniil Konoplev <danchoys@ombori.com>",
+  "nativePackage": true,
+  "license": "MIT",
+  "homepage": "https://github.com/ombori/react-native-search-api",
+  "keywords": [
+    "react-native",
+    "react",
+    "native",
+    "search",
+    "indexing",
+    "ios",
+    "spotlight"
+  ]
+}
