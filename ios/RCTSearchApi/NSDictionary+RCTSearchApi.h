@@ -16,7 +16,7 @@
 @property (nonatomic, readonly) NSURL *rctsa_thumbnailURL;
 @property (nonatomic, readonly) NSString *rctsa_uniqueIdentifier;
 @property (nonatomic, readonly) NSString *rctsa_domain;
-@property (nonatomic, readonly) NSString *rctsa_userInfo;
+@property (nonatomic, readonly) NSDictionary *rctsa_userInfo;
 @property (nonatomic, readonly) BOOL rctsa_eligibleForPublicIndexing;
 @property (nonatomic, readonly) NSDate *rctsa_expirationDate;
 @property (nonatomic, readonly) NSURL *rctsa_webpageURL;

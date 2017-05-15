@@ -37,7 +37,7 @@
     return self[@"domain"];
 }
 
-- (NSString *)rctsa_userInfo {
+- (NSDictionary *)rctsa_userInfo {
     return self[@"userInfo"];
 }
 

@@ -9,9 +9,9 @@
 @import CoreSpotlight;
 @import MobileCoreServices;
 
-#import "RCTUtils.h"
 #import "RCTSearchApiManager.h"
 #import "NSDictionary+RCTSearchApi.h"
+#import <React/RCTUtils.h>
 
 static NSString *const kHandleContinueUserActivityNotification = @"handleContinueUserActivity";
 static NSString *const kUserActivityKey = @"userActivity";
