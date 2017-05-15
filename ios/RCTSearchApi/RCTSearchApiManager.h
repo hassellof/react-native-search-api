@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "RCTEventEmitter.h"
+#import <React/RCTEventEmitter.h>
 
 @interface RCTSearchApiManager : RCTEventEmitter
 
