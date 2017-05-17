@@ -1,6 +1,8 @@
 # React Native Search Api module
 
-The `Search Api` module gives you a general React Native interface to interact with the iOS Search API.
+The `SearchApi` module gives you a general React Native interface to interact with the iOS Search API, Core Spotlight.
+
+For more information about iOS Search APIs, see [https://developer.apple.com/ios/search/](https://developer.apple.com/ios/search/).
 
 ## Installation
 

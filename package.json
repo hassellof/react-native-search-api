@@ -4,7 +4,7 @@
     "type": "git",
     "url": "https://github.com/ombori/react-native-search-api"
   },
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A React Native module that allows to perform the Spotlight integration on iOS",
   "author": "Daniil Konoplev <danchoys@ombori.com>",
   "nativePackage": true,
