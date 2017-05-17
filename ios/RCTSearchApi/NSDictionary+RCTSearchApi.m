@@ -23,7 +23,7 @@
 }
 
 - (NSURL *)rctsa_thumbnailURL {
-    NSString *uri = self[@"thumbnailUri"];
+    NSString *uri = self[@"thumbnailURL"];
     if (!uri)
         return nil;
     return [NSURL URLWithString:uri];

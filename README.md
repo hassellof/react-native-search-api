@@ -2,6 +2,27 @@
 
 The `Search Api` module gives you a general React Native interface to interact with the iOS Search API.
 
+## Installation
+
+### Automatic part
+
+1. `npm install react-native-search-api --save`
+1. `react-native link`
+
+### Manual part
+
+To the top of your `AppDelegate.m` add the following line:
+```
+#import "RCTSearchApiManager.h"
+```
+
+In your AppDelegate implementation add the following:
+```
+- (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray * _Nullable))restorationHandler {
+    return [RCTSearchApiManager application:application continueUserActivity:userActivity restorationHandler:restorationHandler];
+}
+```
+
 ## Usage
 
 Subscribe to the search item open events in your components like this:
