@@ -111,4 +111,4 @@ Expiration date of the user activity item. Optional.
 URL of the page, representing the same content on the app's website.
 
 ## Credits
-Ombori Group AB
+[© 2017 PresenceKit by Ombori AB](https://ombori.com/)
