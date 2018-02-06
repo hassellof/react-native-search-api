@@ -7,13 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <React/RCTImageSource.h>
 
 @interface NSDictionary (RCTSearchApi)
 
 @property (nonatomic, readonly) NSString *rctsa_title;
 @property (nonatomic, readonly) NSString *rctsa_contentDescription;
 @property (nonatomic, readonly) NSArray *rctsa_keywords;
-@property (nonatomic, readonly) NSURL *rctsa_thumbnailURL;
+@property (nonatomic, readonly) RCTImageSource *rctsa_thumbnail;
 @property (nonatomic, readonly) NSString *rctsa_uniqueIdentifier;
 @property (nonatomic, readonly) NSString *rctsa_domain;
 @property (nonatomic, readonly) NSDictionary *rctsa_userInfo;
