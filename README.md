@@ -85,7 +85,21 @@ An array of keywords, assigned to the search item. Optional.
 
 ##### `thumbnail`: string|int|object
 Thumbnail to be presented in the search results. The same format as `source` in
-the `Image` component. Refer to [documentation](https://facebook.github.io/react-native/docs/image.html). Optional.
+the `Image` component. Optional.
+
+Examples:
+```js
+var localItem = {
+  <...>,
+  thumbnail: require('/react-native/img/favicon.png')
+};
+var remoteItem = {
+  <...>,
+  thumbnail: {uri: 'https://facebook.github.io/react-native/docs/assets/favicon.png'}
+};
+```
+
+Please refer to [documentation](https://facebook.github.io/react-native/docs/image.html) for more details.
 
 ### Spotlight-specific keys
 
