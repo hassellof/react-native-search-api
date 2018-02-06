@@ -22,11 +22,8 @@
     return self[@"keywords"];
 }
 
-- (NSURL *)rctsa_thumbnailURL {
-    NSString *uri = self[@"thumbnailURL"];
-    if (!uri)
-        return nil;
-    return [NSURL URLWithString:uri];
+- (RCTImageSource *)rctsa_thumbnail {
+    return [RCTConvert RCTImageSource:self[@"thumbnail"]];
 }
 
 - (NSString *)rctsa_uniqueIdentifier {
