@@ -61,6 +61,28 @@ class SearchApi extends NativeEventEmitter {
     }
 
    /**
+    * Gets the initial spotlight item's identifier. Resoves to null
+    * in case the app was started otherwise.
+    *
+    * @NOTE A good place for calling this method is the component's
+    * `componentDidMount` override.
+    */
+    getInitialSpotlightItem(): Promise {
+        return SearchApiManager.getInitialSpotlightItem();
+    }
+
+   /**
+    * Gets the initial app history item's user info dictionary. Resolves to null
+    * in case the app was started otherwise.
+    *
+    * @NOTE A good place for calling this method is the component's
+    * `componentDidMount` override.
+    */
+    getInitialAppHistoryItem(): Promise {
+        return SearchApiManager.getInitialAppHistoryItem();
+    }
+
+   /**
     * Registers for the spotlight item opening event.
     *
     * @NOTE A good place for calling this method is the component's
