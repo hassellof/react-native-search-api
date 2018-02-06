@@ -18,6 +18,7 @@ static NSString *const kHandleContinueUserActivityNotification = @"handleContinu
 static NSString *const kUserActivityKey = @"userActivity";
 static NSString *const kSpotlightSearchItemTapped = @"spotlightSearchItemTapped";
 static NSString *const kAppHistorySearchItemTapped = @"appHistorySearchItemTapped";
+static NSString *const kApplicationLaunchOptionsUserActivityKey = @"UIApplicationLaunchOptionsUserActivityKey";
 
 typedef void (^ContentAttributeSetCreationCompletion)(CSSearchableItemAttributeSet *set, NSError *error);
 
@@ -71,6 +72,18 @@ RCT_EXPORT_MODULE();
 }
 
 #pragma mark - Exported API
+
+RCT_REMAP_METHOD(getInitialSpotlightItem, retrieveInitialSpotlightItemWithResolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject) {
+    [self retrieveInitialSearchItemOfType:CSSearchableItemActionType bodyBlock:^id(NSUserActivity *activity) {
+        return activity.userInfo[CSSearchableItemActivityIdentifier];
+    } resolve:resolve];
+}
+
+RCT_REMAP_METHOD(getInitialAppHistoryItem, retrieveInitialAppHistoryItemWithResolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject) {
+    [self retrieveInitialSearchItemOfType:[NSBundle mainBundle].bundleIdentifier bodyBlock:^id(NSUserActivity *activity) {
+        return activity.userInfo;
+    } resolve:resolve];
+}
 
 RCT_EXPORT_METHOD(indexItems:(NSArray *)items resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject) {
     if (items.count == 0)
@@ -157,6 +170,17 @@ RCT_EXPORT_METHOD(createUserActivity:(NSDictionary *)item resolve:(RCTPromiseRes
             resolve(nil);
         }
     };
+}
+
+- (void)retrieveInitialSearchItemOfType:(NSString *)type bodyBlock:(id (^)(NSUserActivity *))block resolve:(RCTPromiseResolveBlock)resolve {
+    NSDictionary *userActivityDictionary = self.bridge.launchOptions[UIApplicationLaunchOptionsUserActivityDictionaryKey];
+    if (!userActivityDictionary)
+        return resolve([NSNull null]);
+    NSString *userActivityType = userActivityDictionary[UIApplicationLaunchOptionsUserActivityTypeKey];
+    if (![userActivityType isEqualToString:type])
+        return resolve([NSNull null]);
+    NSUserActivity *userActivity = userActivityDictionary[kApplicationLaunchOptionsUserActivityKey];
+    resolve(RCTNullIfNil(block(userActivity)));
 }
 
 - (void)createContentAttributeSetFromItem:(NSDictionary *)item withCompletion:(ContentAttributeSetCreationCompletion)completionBlock {
