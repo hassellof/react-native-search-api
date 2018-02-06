@@ -83,8 +83,9 @@ Description of the item. Optional.
 ##### `keywords`: Array<string>
 An array of keywords, assigned to the search item. Optional.
 
-##### `thumbnailURL`: string
-URL of the thumbnail, presented in the search results. Optional.
+##### `thumbnail`: string|int|object
+Thumbnail to be presented in the search results. The same format as `source` in
+the `Image` component. Refer to [documentation](https://facebook.github.io/react-native/docs/image.html). Optional.
 
 ### Spotlight-specific keys
 
