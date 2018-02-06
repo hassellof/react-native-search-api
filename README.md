@@ -45,6 +45,23 @@ componentWillUnmount() {
 }
 ```
 
+Generally you should be interested whether the app was started using the search, therefore consider using
+the following two methods:
+```js
+// For the spotlight item:
+SearchApi.getInitialSpotlightItem().then(result => {
+    if (result) {
+        console.log('Started with a spotlight item!')
+    }
+})
+// For the app history item:
+SearchApi.getInitialAppHistoryItem().then(result => {
+    if (result) {
+        console.log('Started with an app history item!')
+    }
+})
+```
+
 In order to create a new spotlight item, use `indexSpotlightItem` or `indexSpotlightItems`:
 ```js
 SearchApi.indexSpotlightItem(item).then(result => {
