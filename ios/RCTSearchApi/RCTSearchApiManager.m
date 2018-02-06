@@ -23,8 +23,6 @@ typedef void (^ContentAttributeSetCreationCompletion)(CSSearchableItemAttributeS
 
 @interface RCTSearchApiManager ()
 
-@property (nonatomic, strong) id<NSObject> continueUserActivityObserver;
-@property (nonatomic, strong) id<NSObject> bundleDidLoadObserver;
 @property (nonatomic, strong) NSMutableArray *userActivities;
 
 @end
@@ -37,34 +35,12 @@ RCT_EXPORT_MODULE();
 
 - (instancetype)init {
     if ((self = [super init])) {
-        __weak typeof(self) weakSelf = self;
-        _continueUserActivityObserver = [[NSNotificationCenter defaultCenter] addObserverForName:kHandleContinueUserActivityNotification
-                                                                                          object:nil
-                                                                                           queue:[NSOperationQueue mainQueue]
-                                                                                      usingBlock:^(NSNotification * _Nonnull note) {
-                                                                                          [weakSelf handleContinueUserActivity:note.userInfo[kUserActivityKey]];
-                                                                                      }];
-        _bundleDidLoadObserver = [[NSNotificationCenter defaultCenter] addObserverForName:RCTJavaScriptDidLoadNotification
-                                                                                   object:nil
-                                                                                    queue:[NSOperationQueue mainQueue]
-                                                                               usingBlock:^(NSNotification * _Nonnull note) {
-                                                                                   [weakSelf drainActivityQueue];
-                                                                               }];
         _userActivities = [NSMutableArray array];
     }
     return self;
 }
 
-- (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self.continueUserActivityObserver];
-    [[NSNotificationCenter defaultCenter] removeObserver:self.bundleDidLoadObserver];
-}
-
 #pragma mark - Properties
-
-+ (BOOL)requiresMainQueueSetup {
-    return YES;
-}
 
 - (dispatch_queue_t)methodQueue {
     return dispatch_get_main_queue();
@@ -72,15 +48,6 @@ RCT_EXPORT_MODULE();
 
 - (NSArray<NSString *> *)supportedEvents {
     return @[kSpotlightSearchItemTapped, kAppHistorySearchItemTapped];
-}
-
-+ (NSMutableArray *)activityQueue {
-    static NSMutableArray *activityQueue;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        activityQueue = [NSMutableArray array];
-    });
-    return activityQueue;
 }
 
 #pragma mark - Public API
@@ -92,8 +59,15 @@ RCT_EXPORT_MODULE();
     [[NSNotificationCenter defaultCenter] postNotificationName:kHandleContinueUserActivityNotification
                                                         object:nil
                                                       userInfo:@{kUserActivityKey: userActivity}];
-    [[[self class] activityQueue] addObject:userActivity];
     return YES;
+}
+
+- (void)startObserving {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleContinueUserActivity:) name:kHandleContinueUserActivityNotification object:nil];
+}
+
+- (void)stopObserving {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark - Exported API
@@ -163,15 +137,8 @@ RCT_EXPORT_METHOD(createUserActivity:(NSDictionary *)item resolve:(RCTPromiseRes
 
 #pragma mark - Private API
 
-- (void)drainActivityQueue {
-    NSMutableArray *activityQueue = [[self class] activityQueue];
-    for (NSUserActivity *userActivity in activityQueue) {
-        [self handleContinueUserActivity:userActivity];
-    }
-    [activityQueue removeAllObjects];
-}
-
-- (void)handleContinueUserActivity:(NSUserActivity *)userActivity {
+- (void)handleContinueUserActivity:(NSNotification *)notification {
+    NSUserActivity *userActivity = notification.userInfo[kUserActivityKey];
     if ([userActivity.activityType isEqualToString:CSSearchableItemActionType]) {
         NSString *uniqueItemIdentifier = userActivity.userInfo[CSSearchableItemActivityIdentifier];
         if (!uniqueItemIdentifier)
