@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
   s.platform     = :ios, "7.0"
 
   s.source       = { :git => "https://github.com/debitoor/react-native-search-api.git" }
-  s.source_files  = "RCTSearchApi/*.{h,m}"
+  s.source_files  = "ios/RCTSearchApi/*.{h,m}"
 
   s.dependency 'React'
 end
